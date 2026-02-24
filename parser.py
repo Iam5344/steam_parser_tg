@@ -9,7 +9,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 
-TELEGRAM_TOKEN = '7403885817:AAGt5YAv5dzFH0mQkFeRxWpwwP6FaLV_Z2w'
+TELEGRAM_TOKEN = 'YOUR ASPI TOKEN HERE'
 CHAT_ID = 5559159126
 STEAM_CHECK_INTERVAL = 1800  # 30 minutes
 
