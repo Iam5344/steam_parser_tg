@@ -10,7 +10,7 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 
 TELEGRAM_TOKEN = 'YOUR ASPI TOKEN HERE'
-CHAT_ID = 5559159126
+CHAT_ID = #delete this and paste the id 
 STEAM_CHECK_INTERVAL = 1800  # 30 minutes
 
 parser_active = False
