@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 TELEGRAM_TOKEN = 'YOUR ASPI TOKEN HERE'
 CHAT_ID = #delete this and paste the id 
-STEAM_CHECK_INTERVAL = 1800  # 30 minutes
+STEAM_CHECK_INTERVAL = 300
 
 parser_active = False
 found_games = set()
