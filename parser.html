@@ -1,0 +1,177 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+    <script>
+
+        class Circle {
+            constructor(radius) {
+                this._radius = radius;
+            }
+
+            get radius() {
+                return this._radius;
+            }
+
+            set radius(value) {
+                if (value > 0) {
+                    this._radius = value;
+                }
+            }
+
+            get diameter() {
+                return this._radius * 2;
+            }
+
+            getArea() {
+                return Math.PI * Math.pow(this._radius, 2);
+            }
+
+            getLength() {
+                return 2 * Math.PI * this._radius;
+            }
+        }
+
+
+        const myCircle = new Circle(5);
+        console.log(`Радіус: ${myCircle.radius}`);
+        console.log(`Діаметр: ${myCircle.diameter}`);
+        console.log(`Площа: ${myCircle.getArea().toFixed(2)}`);
+        console.log(`Довжина: ${myCircle.getLength().toFixed(2)}`);
+
+        myCircle.radius = 10;
+        console.log(`Новий радіус після set: ${myCircle.radius}`);
+        console.log(`Новий діаметр: ${myCircle.diameter}`);
+
+
+
+        class HtmlElement {
+            constructor(tagName, isSelfClosing = false, textContent = "") {
+                this.tagName = tagName;
+                this.isSelfClosing = isSelfClosing;
+                this.textContent = textContent;
+                this.attributes = [];
+                this.styles = []; 
+                this.children = [];  
+            }
+
+            setAttribute(name, value) {
+                this.attributes.push({ name, value });
+            }
+
+            setStyle(name, value) {
+                this.styles.push({ name, value });
+            }
+
+            append(element) {
+                this.children.push(element);
+            }
+
+            prepend(element) {
+                this.children.unshift(element);
+            }
+
+            getHtml() {
+                let attrsStr = "";
+                this.attributes.forEach(attr => {
+                    attrsStr += ` ${attr.name}="${attr.value}"`;
+                });
+
+                if (this.styles.length > 0) {
+                    let stylesStr = this.styles.map(s => `${s.name}: ${s.value};`).join(" ");
+                    attrsStr += ` style="${stylesStr}"`;
+                }
+
+                if (this.isSelfClosing) {
+                    return `<${this.tagName}${attrsStr}>`;
+                }
+
+                let childrenHtml = this.children.map(child => child.getHtml()).join("");
+                
+                return `<${this.tagName}${attrsStr}>${this.textContent}${childrenHtml}</${this.tagName}>`;
+            }
+        }
+
+        const wrapper = new HtmlElement("div");
+        wrapper.setAttribute("id", "wrapper");
+        wrapper.setStyle("display", "flex");
+
+        function createCard() {
+            const cardBlock = new HtmlElement("div");
+            cardBlock.setStyle("width", "300px");
+            cardBlock.setStyle("margin", "10px");
+
+            const h3 = new HtmlElement("h3", false, "What is Lorem Ipsum?");
+            
+            const img = new HtmlElement("img", true);
+            img.setAttribute("style", "width: 100%");
+            img.setAttribute("src", "lipsum.jpg");
+            img.setAttribute("alt", "Lorem Ipsum");
+
+            const p = new HtmlElement("p");
+            p.setStyle("text-align", "justify");
+            p.textContent = '"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."';
+
+            const a = new HtmlElement("a", false, "More...");
+            a.setAttribute("href", "https://www.lipsum.com/");
+            a.setAttribute("target", "_blank");
+
+            p.append(a);
+            cardBlock.append(h3);
+            cardBlock.append(img);
+            cardBlock.append(p);
+
+            return cardBlock;
+        }
+
+        wrapper.append(createCard());
+        wrapper.append(createCard());
+
+        document.write(wrapper.getHtml());
+
+
+
+        class CssClass {
+            constructor(className) {
+                this.className = className;
+                this.styles = [];
+            }
+
+            setStyle(name, value) {
+                const existing = this.styles.find(s => s.name === name);
+                if (existing) {
+                    existing.value = value;
+                } else {
+                    this.styles.push({ name, value });
+                }
+            }
+
+            deleteStyle(name) {
+                this.styles = this.styles.filter(s => s.name !== name);
+            }
+
+            getCss() {
+                if (this.styles.length === 0) return "";
+                let stylesStr = this.styles.map(s => `    ${s.name}: ${s.value};`).join("\n");
+                return `.${this.className} {\n${stylesStr}\n}`;
+            }
+        }
+
+        const myClass = new CssClass("card-title");
+        myClass.setStyle("font-size", "24px");
+        myClass.setStyle("color", "blue");
+        myClass.setStyle("margin-bottom", "10px");
+        
+        console.log("Генерація CSS:");
+        console.log(myClass.getCss());
+
+        myClass.deleteStyle("color");
+        console.log("Після видалення стилю color:");
+        console.log(myClass.getCss());
+    </script>
+    </body>
+    </html>
